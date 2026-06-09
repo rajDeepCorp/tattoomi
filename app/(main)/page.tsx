@@ -15,7 +15,7 @@ export default function Home() {
 
 
   return (
-    <div>
+    <div className="relative">
       Hello, welcome to Tattoomi! Please sign up to continue.
       <div className="relative my-10">
         <button

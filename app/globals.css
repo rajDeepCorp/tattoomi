@@ -38,4 +38,5 @@ html {
 
 body {
   -ms-overflow-style: none;
+  overflow-x: hidden;
 }

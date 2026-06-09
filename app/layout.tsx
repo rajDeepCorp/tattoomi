@@ -24,7 +24,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${poppinsFont.variable} ${varelaRoundFont.variable} antialiased`}
+      className={`${poppinsFont.variable} ${varelaRoundFont.variable} antialiased sm:min-h-screen min-h-svh sm:min-w-screen min-w-svw`}
     >
       <body>
         {children}
