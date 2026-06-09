@@ -1,9 +1,11 @@
 import React from 'react'
 
-export default function About() {
+const Footer = () => {
   return (
     <div>
-      About Page
+      Footer
     </div>
   )
 }
+
+export default Footer

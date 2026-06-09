@@ -1,9 +1,11 @@
 import React from 'react'
 
-export default function About() {
+const Navbar = () => {
   return (
     <div>
-      About Page
+      Navbar
     </div>
   )
 }
+
+export default Navbar
