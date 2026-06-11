@@ -1,4 +1,4 @@
-// tattoomi/app/layout.tsx
+// tattoomi/app/(main)/layout.tsx
 
 
 import Navbar from "@/components/navigation/Navbar";

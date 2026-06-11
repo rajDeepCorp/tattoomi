@@ -40,3 +40,7 @@ body {
   -ms-overflow-style: none;
   overflow-x: hidden;
 }
+
+button {
+  cursor: pointer;
+}

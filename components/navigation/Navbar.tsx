@@ -13,7 +13,7 @@ type NavbarProps = {
 };
 
 const pathToKey = { "/": "Home", "/search": "Search", "/profile": "Profile", "/signin": "Profile", "/signup": "Profile", } as const;
-const linkClass = "relative shadow shadow-stone-500 p-1 rounded-2xl";
+const linkClass = "relative shadow shadow-stone-500 p-1 rounded-2xl transition-all duration-300 ease-in";
 type LinkMeta = { Icon: IconType; label: string; title: string; key: string; href: string; };
 
 const Navbar = ({ isAuthenticated }: NavbarProps) => {
