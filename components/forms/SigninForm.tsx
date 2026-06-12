@@ -7,6 +7,17 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 
+const styles = {
+  formContainer:
+    "relative w-10/12 text-shadow-sm text-shadow-stone-500 flex sm:flex-row flex-col justify-start sm:items-start items-end gap-2 p-2",
+  shortLabel:
+    "relative px-5 py-0.5 shadow rounded-2xl shadow-stone-500 sm:text-end text-start",
+  input:
+    "relative outline-none shadow-inner shadow-stone-500 rounded-2xl px-2 w-full text-shadow-2xs text-shadow-stone-500",
+  inputWrapper:
+    "relative px-5 py-1 shadow rounded-2xl shadow-stone-500 flex gap-4",
+};
+
 const SigninForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -88,18 +99,19 @@ const SigninForm = () => {
   return (
     <div className="relative w-full text-sm flex flex-col justify-center items-center gap-6">
       <p className='relative text-xl'>Sign into your account</p>
-      <form onSubmit={handleSubmit} className="relative border">
+      <form onSubmit={handleSubmit}
+        className="relative w-11/12 max-w-2xl mx-auto flex flex-col justify-center items-center my-7 border-b"      >
         {/* Email */}
-        <div /* className={styles.formContainer} */>
+        <div className={styles.formContainer}>
 
           <label
             htmlFor="email"
-            /* className={styles.shortLabel} */
+          className={styles.shortLabel}
           >
             Email
           </label>
 
-          <div /* className={styles.inputWrapper} */>
+          <div className={styles.inputWrapper}>
 
             <input
               required
@@ -108,7 +120,7 @@ const SigninForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder='Enter Email'
-              /* className={styles.input} */
+            className={styles.input}
             />
 
           </div>
@@ -116,16 +128,16 @@ const SigninForm = () => {
         </div>
 
         {/* Password */}
-        <div /* className={styles.formContainer} */>
+        <div className={styles.formContainer}>
 
           <label
             htmlFor="password"
-            /* className={styles.shortLabel} */
+          className={styles.shortLabel}
           >
             Password
           </label>
 
-          <div /* className={styles.inputWrapper} */>
+          <div className={styles.inputWrapper}>
 
             <input
               required
@@ -134,7 +146,7 @@ const SigninForm = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder='Enter Password'
-              /* className={styles.input} */
+            className={styles.input}
             />
 
           </div>
