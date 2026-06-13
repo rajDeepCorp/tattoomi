@@ -8,9 +8,7 @@ import React, { useEffect, useState } from 'react'
 import { IconType } from "react-icons";
 import { CiSearch, CiShop, CiShoppingCart, CiShoppingTag, CiUser, } from "react-icons/ci";
 
-type NavbarProps = {
-  isAuthenticated: boolean;
-};
+type NavbarProps = { isAuthenticated: boolean; };
 
 const pathToKey = { "/": "Home", "/search": "Search", "/profile": "Profile", "/signin": "Profile", "/signup": "Profile", } as const;
 const linkClass = "relative shadow shadow-stone-500 p-1 rounded-2xl transition-all duration-300 ease-in";
