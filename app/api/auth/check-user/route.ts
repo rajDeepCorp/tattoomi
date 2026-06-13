@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { MongoClient } from "mongodb";
 
 const client = new MongoClient(
-process.env.MOngoDB_URI as string
+process.env.MONGODB_URI as string
 );
 
 export async function POST(req: NextRequest) {
