@@ -52,7 +52,8 @@ const SignupForm = () => {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setAlertMessage("");
-    const { name, email, username, password, mobile, dob, } = formData;
+    const { name, email, password, mobile, dob } = formData;
+    const username = `@${formData.username.trim().replace(/^@+/, "")}`;
     if (!name.trim() || !email.trim() || !username.trim() || !password.trim() || !mobile.trim() || !dob.trim()) {
       setAlertMessage("⚠️ Please fill all required fields");
       return;
