@@ -1,4 +1,4 @@
-// inkrush/components/ui/signinbuttons.jsx
+// tattoomi/components/forms/SigninForm.tsx
 "use client";
 import { FcGoogle } from "react-icons/fc";
 import { CiFacebook } from "react-icons/ci";
@@ -8,14 +8,10 @@ import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 
 const styles = {
-  formContainer:
-    "relative w-10/12 text-shadow-sm text-shadow-stone-500 flex sm:flex-row flex-col justify-start sm:items-start items-end gap-2 p-2",
-  shortLabel:
-    "relative px-5 py-0.5 shadow rounded-2xl shadow-stone-500 sm:text-end text-start",
-  input:
-    "relative outline-none shadow-inner shadow-stone-500 rounded-2xl px-2 w-full text-shadow-2xs text-shadow-stone-500",
-  inputWrapper:
-    "relative px-5 py-1 shadow rounded-2xl shadow-stone-500 flex gap-4",
+  formContainer:"relative w-10/12 text-shadow-sm text-shadow-stone-500 flex sm:flex-row flex-col justify-start sm:items-start gap-2 p-2",
+  shortLabel:"relative px-5 py-0.5 shadow rounded-2xl shadow-stone-500 sm:text-end text-start",
+  input:"relative outline-none shadow-inner shadow-stone-500 rounded-2xl px-2 w-full text-shadow-2xs text-shadow-stone-500",
+  inputWrapper:"relative px-5 py-1 shadow rounded-2xl shadow-stone-500 flex gap-4",
 };
 
 const SigninForm = () => {
@@ -81,13 +77,6 @@ const SigninForm = () => {
 
   }, [alertMessage]);
 
-  // const handleFacebookSignUp = async () => {
-  //   await authClient.signIn.social({
-  //     provider: "facebook",
-  //     callbackURL: "/dashboard",
-  //   });
-  // };
-
   const buttonMeta = [
     { Icon: FcGoogle, Action: handleGoogleSignUp, text: "Google" },
     // { Icon: CiFacebook, Action: handleFacebookSignUp, text: "Facebook" },
@@ -97,12 +86,12 @@ const SigninForm = () => {
   const buttonStylesClasses = "relative max-w-xs min-w-54 tracking-widest shadow-stone-500 py-2 rounded-2xl flex justify-center items-center gap-1.5 transition-all duration-200 ease-in shadow hover:scale-105 active:scale-95 active:shadow-inner";
 
   return (
-    <div className="relative w-full text-sm flex flex-col justify-center items-center gap-6">
+    <div className="relative w-full text-sm flex flex-col justify-center items-center gap-6 my-2">
       <p className='relative text-xl'>Sign into your account</p>
       <form onSubmit={handleSubmit}
-        className="relative w-11/12 max-w-2xl mx-auto flex flex-col justify-center items-center my-7 border-b"      >
+        className="relative w-11/12 max-w-2xl mx-auto flex flex-col justify-center items-center border-b">
         {/* Email */}
-        <div className={styles.formContainer}>
+        <div className={`${styles.formContainer} items-start`}>
 
           <label
             htmlFor="email"
@@ -128,11 +117,11 @@ const SigninForm = () => {
         </div>
 
         {/* Password */}
-        <div className={styles.formContainer}>
+        <div className={`${styles.formContainer} items-end`}>
 
           <label
             htmlFor="password"
-          className={styles.shortLabel}
+          className={`${styles.shortLabel} `}
           >
             Password
           </label>

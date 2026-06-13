@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@better-auth/mongo-adapter": "^1.6.15",
+    "@vercel/blob": "^2.4.0",
     "better-auth": "^1.6.15",
     "firebase": "^12.14.0",
     "firebase-admin": "^14.0.0",

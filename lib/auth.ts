@@ -24,5 +24,33 @@ export const auth = betterAuth({
         //     clientSecret: process.env.AUTH_FACEBOOK_SECRET as string,
         // },
     },
-    
+
+    user: {
+        additionalFields: {
+            username: {
+                type: "string",
+                required: true,
+            },
+            mobile: {
+                type: "string",
+                required: true,
+            },
+            dob: {
+                type: "string",
+                required: true,
+            },
+            image: {
+                type: "string",
+                required: false,
+            },
+            address: {
+                type: "string",
+                required: false,
+            },
+            bio: {
+                type: "string",
+                required: false,
+            },
+        },
+    },
 });
