@@ -49,9 +49,7 @@ const SignupForm = () => {
     return uploaded?.url || null;
   };
 
-  async function handleSubmit(
-    e: React.FormEvent<HTMLFormElement>
-  ) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setAlertMessage("");
     const { name, email, username, password, mobile, dob, } = formData;
@@ -60,22 +58,18 @@ const SignupForm = () => {
       return;
     }
     setLoading(true);
-
     try {
-      const checkResponse = await fetch(
-        "/api/auth/check-user",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            username,
-          }),
-        }
-      );
+      const checkResponse = await fetch("/api/auth/check-user", {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          username,
+        }),
+      });
       if (!checkResponse.ok) {
         throw new Error(
           "Failed to verify user"
@@ -87,12 +81,10 @@ const SignupForm = () => {
         setAlertMessage("❌ Email already registered");
         return;
       }
-
       if (checkData.usernameExists) {
         setAlertMessage("❌ Username already taken");
         return;
       }
-
       let imageUrl = "";
       if (selectedFile) {
         const uploadedUrl = await uploadProfilePic();
@@ -103,12 +95,12 @@ const SignupForm = () => {
       }
 
       type SignupData = { name: string; email: string; password: string; username: string; mobile: string; dob: string; image?: string; callbackURL?: string; };
-      const signupData: SignupData = { name, email, password, username, mobile, dob, image: imageUrl, callbackURL: "/dashboard", };
+      const signupData: SignupData = { name, email, password, username, mobile, dob, image: imageUrl, callbackURL: "/profile", };
       const { error } = await authClient.signUp.email(
         signupData as any,
         {
           onSuccess: async () => {
-            router.push("/dashboard");
+            router.push("/profile");
           },
         }
       );
@@ -153,12 +145,10 @@ const SignupForm = () => {
     try {
       setLoading(true);
       setAlertMessage("");
-
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/dashboard",
+        callbackURL: "/profile",
       });
-
     } catch (err) {
       setAlertMessage("❌ Google Signin Failed");
     } finally {
@@ -167,15 +157,11 @@ const SignupForm = () => {
   };
 
   useEffect(() => {
-
     if (!alertMessage) return;
-
     const timer = setTimeout(() => {
       setAlertMessage("");
     }, 3000);
-
     return () => clearTimeout(timer);
-
   }, [alertMessage]);
 
   const buttonMeta = [
@@ -191,99 +177,32 @@ const SignupForm = () => {
       <p className='relative text-xl'>Create your artist account</p>
       <form onSubmit={handleSubmit}
         className="relative w-11/12 max-w-2xl mx-auto flex flex-col justify-center items-center border-b [&>.form-container:nth-child(even)]:items-end">
-
-        <Field
-          id="name"
-          label="Full Name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-
-        <Field
-          id="email"
-          label="Email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-
-        <Field
-          id="username"
-          label="Username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-
-        <Field
-          id="mobile"
-          label="Mobile"
-          type="tel"
-          value={formData.mobile}
-          onChange={handleChange}
-        />
-
-        <Field
-          id="dob"
-          label="Date of Birth"
-          type="date"
-          value={formData.dob}
-          onChange={handleChange}
-        />
-
-        <Field
-          id="password"
-          label="Password"
-          type="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-
+        <Field id="name" label="Full Name" value={formData.name} onChange={handleChange} />
+        <Field id="email" label="Email" type="email" value={formData.email} onChange={handleChange} />
+        <Field id="username" label="Username" value={formData.username} onChange={handleChange} />
+        <Field id="mobile" label="Mobile" type="tel" value={formData.mobile} onChange={handleChange} />
+        <Field id="dob" label="Date of Birth" type="date" value={formData.dob} onChange={handleChange} />
+        <Field id="password" label="Password" type="password" value={formData.password} onChange={handleChange} />
         {/* Profile Pic */}
         <div className={`${styles.formContainer} form-container`}>
-          <label
-            htmlFor="profilePic"
-            className={`${styles.shortLabel}`}
-          >
-            Profile Pic
-          </label>
+          <label htmlFor="profilePic" className={`${styles.shortLabel}`}>Profile Pic</label>
           <div className={styles.inputWrapper}>
-            <input
-              type="file"
-              id="profilePic"
-              className={styles.input}
-              onChange={(e) => {
-
-                const file = e.target.files?.[0];
-
-                if (
-                  file &&
-                  file.size > 2 * 1024 * 1024
-                ) {
-
-                  setAlertMessage(
-                    "⚠️ File size must be less than 2MB"
-                  );
-
-                  e.target.value = "";
-
-                  setSelectedFile(null);
-
-                } else {
-
-                  setSelectedFile(file || null);
-                }
-              }}
+            <input type="file" id="profilePic" className={styles.input} onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file && file.size > 2 * 1024 * 1024) {
+                setAlertMessage("⚠️ File size must be less than 2MB");
+                e.target.value = "";
+                setSelectedFile(null);
+              } else {
+                setSelectedFile(file || null);
+              }
+            }}
             />
-
           </div>
-
         </div>
-
         {/* Submit */}
-
         <button
-          type="submit"
-          disabled={loading}
+          type="submit" disabled={loading}
           className={`${loading ? "opacity-50 cursor-not-allowed" : ""} relative mb-2 max-w-2xs rounded-2xl shadow shadow-stone-500 text-shadow-sm text-shadow-stone-500 py-1 px-5 transition-all duration-150 ease-in hover:scale-105 active:scale-95`}
         >
           {loading ? "Creating..." : "Signup"}
@@ -291,13 +210,7 @@ const SignupForm = () => {
       </form>
       <p>or continue with</p>
       {buttonMeta.map(({ Icon, Action, text }, index) => (
-        <button
-          key={index}
-          onClick={Action}
-          type="submit"
-          aria-label={`Sign in with ${text}`}
-          className={buttonStylesClasses}
-        >
+        <button key={index} onClick={Action} type="submit" aria-label={`Sign in with ${text}`} className={buttonStylesClasses}>
           {text} <Icon className="text-xl" />
         </button>
       ))}
