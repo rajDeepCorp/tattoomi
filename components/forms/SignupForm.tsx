@@ -1,6 +1,7 @@
 // tattoomi/components/forms/SigninForm.tsx
 "use client";
-import React, { useEffect, useState } from 'react'
+import React, { useState } from "react";
+import { toast } from "sonner";
 import Link from "next/link";
 import { upload } from "@vercel/blob/client";
 import { authClient } from '@/lib/auth-client';
@@ -23,7 +24,6 @@ const SignupForm = () => {
   const [formData, setFormData] = useState(initialForm);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -51,13 +51,15 @@ const SignupForm = () => {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setAlertMessage("");
+
     const { name, email, password, mobile, dob } = formData;
     const username = `@${formData.username.trim().replace(/^@+/, "")}`;
+
     if (!name.trim() || !email.trim() || !username.trim() || !password.trim() || !mobile.trim() || !dob.trim()) {
-      setAlertMessage("⚠️ Please fill all required fields");
+      toast.warning("Please fill all required fields");
       return;
     }
+    const loadingToast = toast.loading("Creating account...");
     setLoading(true);
     try {
       const checkResponse = await fetch("/api/auth/check-user", {
@@ -79,11 +81,13 @@ const SignupForm = () => {
       const checkData =
         await checkResponse.json();
       if (checkData.emailExists) {
-        setAlertMessage("❌ Email already registered");
+        toast.dismiss(loadingToast);
+        toast.error("Email already registered");
         return;
       }
       if (checkData.usernameExists) {
-        setAlertMessage("❌ Username already taken");
+        toast.dismiss(loadingToast);
+        toast.error("Username already taken");
         return;
       }
       let imageUrl = "";
@@ -124,46 +128,39 @@ const SignupForm = () => {
           );
         }
 
-        setAlertMessage(
-          `❌ ${error.message ||
-          "Signup failed"
-          }`
-        );
-
+        toast.dismiss(loadingToast);
+        toast.error(error.message || "Signup failed");
         return;
       }
-      setAlertMessage("✅ Account created successfully");
+      toast.dismiss(loadingToast);
+      toast.success("Account created successfully");
       setFormData(initialForm);
       setSelectedFile(null);
     } catch (err) {
-      setAlertMessage("❌ Something went wrong");
+      toast.dismiss(loadingToast);
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
   }
 
   const handleGoogleSignUp = async () => {
+    const loadingToast = toast.loading("Redirecting to Google...");
     try {
       setLoading(true);
-      setAlertMessage("");
+
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/profile",
       });
+      toast.dismiss(loadingToast);
     } catch (err) {
-      setAlertMessage("❌ Google Signin Failed");
+      toast.dismiss(loadingToast);
+      toast.error("Google Signin Failed");
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (!alertMessage) return;
-    const timer = setTimeout(() => {
-      setAlertMessage("");
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [alertMessage]);
 
   const buttonMeta = [
     { Icon: FcGoogle, Action: handleGoogleSignUp, text: "Google" },
@@ -191,11 +188,9 @@ const SignupForm = () => {
             <input type="file" id="profilePic" className={styles.input} onChange={(e) => {
               const file = e.target.files?.[0];
               if (file && file.size > 2 * 1024 * 1024) {
-                setAlertMessage("⚠️ File size must be less than 2MB");
+                toast.warning("File size must be less than 2MB");
                 e.target.value = "";
                 setSelectedFile(null);
-              } else {
-                setSelectedFile(file || null);
               }
             }}
             />

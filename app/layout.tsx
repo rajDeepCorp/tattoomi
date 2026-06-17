@@ -2,6 +2,7 @@
 
 import { Poppins, Varela_Round, } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const poppinsFont = Poppins({
   variable: "--font-poppins-font",
@@ -28,6 +29,12 @@ export default function RootLayout({
     >
       <body>
         {children}
+        <Toaster
+          position="top-center"
+          richColors
+          closeButton
+          duration={3000}
+        />
       </body>
     </html>
   );

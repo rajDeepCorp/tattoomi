@@ -5,27 +5,29 @@ import { CiFacebook } from "react-icons/ci";
 import { IoLogoInstagram } from "react-icons/io5";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const styles = {
-  formContainer:"relative w-10/12 text-shadow-sm text-shadow-stone-500 flex sm:flex-row flex-col justify-start sm:items-start gap-2 p-2",
-  shortLabel:"relative px-5 py-0.5 shadow rounded-2xl shadow-stone-500 sm:text-end text-start",
-  input:"relative outline-none shadow-inner shadow-stone-500 rounded-2xl px-2 w-full text-shadow-2xs text-shadow-stone-500",
-  inputWrapper:"relative px-5 py-1 shadow rounded-2xl shadow-stone-500 flex gap-4",
+  formContainer: "relative w-10/12 text-shadow-sm text-shadow-stone-500 flex sm:flex-row flex-col justify-start sm:items-start gap-2 p-2",
+  shortLabel: "relative px-5 py-0.5 shadow rounded-2xl shadow-stone-500 sm:text-end text-start",
+  input: "relative outline-none shadow-inner shadow-stone-500 rounded-2xl px-2 w-full text-shadow-2xs text-shadow-stone-500",
+  inputWrapper: "relative px-5 py-1 shadow rounded-2xl shadow-stone-500 flex gap-4",
 };
 
 const SigninForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
+    const loadingToast = toast.loading("Signing in...");
+
     try {
       setLoading(true);
-      setAlertMessage("");
+
 
       const { data, error } = await authClient.signIn.email({
         email,
@@ -35,47 +37,42 @@ const SigninForm = () => {
       });
 
       if (error) {
-        setAlertMessage(
-          `❌ ${error.message || "Invalid email or password"}`
-        );
+        toast.dismiss(loadingToast);
+        toast.error(error.message || "Invalid email or password");
         return;
       }
 
+      toast.dismiss(loadingToast);
+      toast.success("Signed in successfully!");
+
     } catch (err) {
-      setAlertMessage("❌ Something went wrong");
+      toast.dismiss(loadingToast);
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
   }
 
   const handleGoogleSignUp = async () => {
+    const loadingToast = toast.loading("Redirecting to Google...");
     try {
       setLoading(true);
-      setAlertMessage("");
+
 
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/dashboard",
       });
 
+      toast.dismiss(loadingToast);
+
     } catch (err) {
-      setAlertMessage("❌ Google Signin Failed");
+      toast.dismiss(loadingToast);
+      toast.error("Google Signin Failed");
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-
-    if (!alertMessage) return;
-
-    const timer = setTimeout(() => {
-      setAlertMessage("");
-    }, 3000);
-
-    return () => clearTimeout(timer);
-
-  }, [alertMessage]);
 
   const buttonMeta = [
     { Icon: FcGoogle, Action: handleGoogleSignUp, text: "Google" },
@@ -95,7 +92,7 @@ const SigninForm = () => {
 
           <label
             htmlFor="email"
-          className={styles.shortLabel}
+            className={styles.shortLabel}
           >
             Email
           </label>
@@ -109,7 +106,7 @@ const SigninForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder='Enter Email'
-            className={styles.input}
+              className={styles.input}
             />
 
           </div>
@@ -121,7 +118,7 @@ const SigninForm = () => {
 
           <label
             htmlFor="password"
-          className={`${styles.shortLabel} `}
+            className={`${styles.shortLabel} `}
           >
             Password
           </label>
@@ -135,7 +132,7 @@ const SigninForm = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder='Enter Password'
-            className={styles.input}
+              className={styles.input}
             />
 
           </div>
