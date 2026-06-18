@@ -1,20 +1,19 @@
 // components/navigation/Navbar.tsx
-
 "use client";
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { IconType } from "react-icons";
-import { CiSearch, CiShop, CiShoppingCart, CiShoppingTag, CiUser, } from "react-icons/ci";
+import { CiSearch, CiShop, CiSettings, CiCamera, CiUser, } from "react-icons/ci";
 
-type NavbarProps = { isAuthenticated: boolean; };
+type NavbarProps = { user: { username?: string | null; emailVerified?: boolean; }; };
 
 const pathToKey = { "/": "Home", "/search": "Search", "/profile": "Profile", "/signin": "Profile", "/signup": "Profile", } as const;
 const linkClass = "relative shadow shadow-stone-500 p-1 rounded-2xl transition-all duration-300 ease-in";
 type LinkMeta = { Icon: IconType; label: string; title: string; key: string; href: string; };
 
-const Navbar = ({ isAuthenticated }: NavbarProps) => {
+const Navbar = ({ user }: NavbarProps) => {
   const pathname = usePathname();
   const activeIndex = pathname ? pathToKey[pathname as keyof typeof pathToKey] ?? null : null;
   const [scrollingDown, setScrollingDown] = useState(false);
@@ -45,13 +44,13 @@ const Navbar = ({ isAuthenticated }: NavbarProps) => {
     { Icon: CiShop, label: "Home", title: "Home", key: "Home", href: "/" },
     { Icon: CiSearch, label: "Search", title: "Search", key: "Search", href: "/search" },
 
-    ...(isAuthenticated
+    ...(user.username?.trim() && user.emailVerified
       ? [
-        { Icon: CiShoppingTag, label: "Orders", title: "Orders", key: "Orders", href: "/orders", },
-        { Icon: CiShoppingCart, label: "Cart", title: "Cart", key: "Cart", href: "/cart", },
+        { Icon: CiCamera, label: "Post Work", title: "Post Work", key: "Post", href: "/post", },
+        { Icon: CiSettings, label: "Settings", title: "Settings", key: "Settings", href: "/settings", },
       ]
       : []),
-    { Icon: CiUser, label: "Profile", title: "Profile", key: "Profile", href: isAuthenticated ? "/profile" : "/signin", },
+    { Icon: CiUser, label: "Profile", title: "Profile", key: "Profile", href: user.username?.trim() && user.emailVerified ? "/profile" : "/signin", },
   ];
   return (
     <nav className={`fixed bottom-0 left-1/2 -translate-x-1/2 shadow-inner shadow-stone-500 py-2 px-4 my-1 rounded-4xl text-2xl flex justify-center items-center gap-4 transition-all duration-300 ease-in ${scrollingDown ? "translate-y-[125%]" : "translate-y-0"}`}>

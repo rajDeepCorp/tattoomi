@@ -11,7 +11,7 @@ export default async function MainLayout({ children, }: Readonly<{ children: Rea
     return (
         <main className="relative shadow-inner shadow-stone-500 p-2 m-1 sm:rounded-2xl rounded-xl overflow-x-hidden">
             {children}
-            <Navbar isAuthenticated={!!session} />
+            <Navbar user={session.user} />
         </main>
 
     );

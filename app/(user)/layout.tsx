@@ -22,7 +22,7 @@ export default async function UserLayout({
   return (
     <>
       {children}
-      <Navbar isAuthenticated={!!session} />
+      <Navbar user={session.user} />
     </>
   );
 }

@@ -188,26 +188,19 @@ const SignupForm = () => {
             <input type="file" id="profilePic" className={styles.input} onChange={(e) => {
               const allowed = ["image/png", "image/jpeg", "image/jpg", "image/webp",];
               const file = e.target.files?.[0];
-              if (!file) {
-                setSelectedFile(null);
-                return;
-              }
-
+              if (!file) { setSelectedFile(null); return; }
               if (file.size > 2 * 1024 * 1024) {
                 toast.warning("File size must be less than 2MB");
                 e.target.value = "";
                 setSelectedFile(null);
                 return;
               }
-
               if (!allowed.includes(file.type)) {
-                toast.warning("Only JPG, PNG or WEBP allowed");
+                toast.warning("Image format not allowed");
                 e.target.value = "";
                 setSelectedFile(null);
                 return;
               }
-
-              // ✅ Valid file
               setSelectedFile(file);
             }}
             />
