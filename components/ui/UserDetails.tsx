@@ -10,7 +10,7 @@ export const UserDetails = ({ user }: UserDetailsProps) => {
     return (
         <div className='relative sm:w-2/5 w-full shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-2 text-shadow-xs text-shadow-stone-500'>
             <h1 className='relative max-w-fit text-xl text-center dark:shadow shadow-inner shadow-stone-500 rounded-2xl py-0.5 px-2 text-shadow-lg my-1 flex justify-start items-center'>
-                {user.username || "UserName"}
+                {user.username || "Guest"}
                 {user.username?.trim() && user.emailVerified && (
                     <span className="relative -translate-y-1/3">
                         <VscVerified />

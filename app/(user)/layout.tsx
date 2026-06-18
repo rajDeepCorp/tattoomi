@@ -19,10 +19,12 @@ export default async function UserLayout({
     redirect('/signin');
   }
 
+  const user = session?.user ?? null;
+
   return (
     <>
       {children}
-      <Navbar user={session.user} />
+      <Navbar user={user} />
     </>
   );
 }
