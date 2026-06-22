@@ -7,8 +7,6 @@ import { upload } from "@vercel/blob/client";
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
-import { CiFacebook } from "react-icons/ci";
-import { IoLogoInstagram } from "react-icons/io5";
 
 const styles = {
   formContainer: "relative w-10/12 text-shadow-sm text-shadow-stone-500 flex sm:flex-row flex-col justify-start sm:items-start gap-2 p-2",
