@@ -1,7 +1,7 @@
 // firebaseAdmin.ts
 
 import { initializeApp, cert, getApps, getApp } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
+// import { getAuth } from "firebase-admin/auth";
 import { getDatabase } from "firebase-admin/database";
 
 const app =
@@ -20,5 +20,5 @@ const app =
         databaseURL: process.env.FIREBASE_DATABASE_URL,
       });
 
-export const adminAuth = getAuth(app);
+// export const adminAuth = getAuth(app);
 export const adminDb = getDatabase(app);
