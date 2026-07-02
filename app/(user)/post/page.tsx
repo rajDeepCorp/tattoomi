@@ -1,7 +1,6 @@
 // app/(user)/post/page.tsx
 
 "use client";
-
 import Image from "next/image";
 import React, { useState } from "react";
 import { upload } from "@vercel/blob/client";
@@ -9,20 +8,15 @@ import { upload } from "@vercel/blob/client";
 export default function PostPage() {
     const [file, setFile] = useState<File | null>(null);
     const [image, setImage] = useState("/1.jpg");
-
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState("");
 
     const [uploading, setUploading] = useState(false);
 
-    const handleImageChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files?.[0];
-
         if (!selectedFile) return;
-
         setFile(selectedFile);
         setImage(URL.createObjectURL(selectedFile));
     };
@@ -32,16 +26,14 @@ export default function PostPage() {
             alert("Please select an image.");
             return;
         }
-
         try {
             setUploading(true);
-
             // Upload image to Vercel Blob
             const blob = await upload(file.name, file, {
                 access: "public",
                 handleUploadUrl: "/api/imagefiles/upload",
             });
-
+            
             const imageUrl = blob.url;
 
             // Save post in database
@@ -141,11 +133,11 @@ export default function PostPage() {
             </div>
 
             {/* Upload Button */}
-            <div className="relative shadow shadow-stone-500 p-2 m-1 rounded-4xl">
+            <div className="relative shadow mt-2 shadow-stone-500 p-2 m-1 rounded-4xl flex justify-center items-center">
                 <button
                     onClick={handleUpload}
                     disabled={uploading}
-                    className="px-5 py-2 bg-blue-600 rounded-lg text-white disabled:opacity-50"
+                    className="px-5 py-2 rounded-4xl shadow shadow-stone-500 disabled:opacity-50 disabled:shadow-inner"
                 >
                     {uploading ? "Uploading..." : "Upload"}
                 </button>
