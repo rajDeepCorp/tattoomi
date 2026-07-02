@@ -1,15 +1,15 @@
 import React from 'react'
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
-import Image from 'next/image'
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { UserFace } from '@/components/ui/UserFace';
 import { UserDetails } from '@/components/ui/UserDetails';
 import { UserSocialLinks } from '@/components/ui/UserSocialLinks';
 import { ExploreArtist } from '@/components/ui/ExploreArtist';
+import { adminDb } from "@/firebaseAdmin";
+import UserPosts from '@/components/ui/UserPosts';
 
-const images = [1, 2, 3, 4];
+
 
 export default async function Profile() {
   const session = await auth.api.getSession({
@@ -18,6 +18,28 @@ export default async function Profile() {
 
   if (!session) {
     redirect('/signin');
+  }
+
+  const snapshot = await adminDb.ref("posts").get();
+
+  let posts: any[] = [];
+
+  if (snapshot.exists()) {
+    const data = snapshot.val();
+
+    posts = Object.entries(data)
+      .map(([id, post]: any) => ({
+        id,
+        ...post,
+      }))
+      .filter(
+        (post: any) =>
+          post.username === session.user.username
+      )
+      .sort(
+        (a: any, b: any) =>
+          b.createdAt - a.createdAt
+      );
   }
 
   const buttonClasses = "relative shadow dark:shadow-inner shadow-stone-500 py-1 px-2 hover:scale-105 transition-all ease-in duration-150";
@@ -48,24 +70,8 @@ export default async function Profile() {
         </div>
       </div>
 
-      <div className="relative dark:shadow shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-2 overflow-x-hidden columns-2 lg:columns-3 xl:columns-5 2xl:columns-7">
-        {images.map((num) => (
-          <div
-            key={num}
-            className="relative flex justify-center items-center dark:shadow-inner shadow shadow-stone-500 rounded-xl mb-4"
-          >
-            <Link href={`/art/${num}`}>
-              <Image
-                width={720}
-                height={720}
-                src={`/${num}.jpg`}
-                alt={`Decorative Image ${num}`}
-                className="rounded-xl"
-              />
-            </Link>
-          </div>
-        ))}
-      </div>
+      <UserPosts posts={posts} />
+
     </div>
   )
 }
