@@ -1,31 +1,45 @@
-// tattoomi/app/(main)/page.tsx
-
-"use client";
-import { authClient } from "@/lib/auth-client";
+// app/(main)/page.tsx
 import Image from "next/image";
+import Link from "next/link";
+import { adminDb } from "@/firebaseAdmin";
 
-export default function Home() {
+export default async function Home() {
+  const snapshot = await adminDb.ref("posts").get();
 
-  const handleGoogleSignUp = async () => {
-    await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/dashboard",
-    });
-  };
+  let posts: any[] = [];
 
+  if (snapshot.exists()) {
+    const data = snapshot.val();
+
+    posts = Object.entries(data)
+      .map(([id, post]: any) => ({
+        id,
+        ...post,
+      }))
+      .sort(
+        (a: any, b: any) =>
+          b.createdAt - a.createdAt
+      );
+  }
 
   return (
-    <div className="relative">
-      Hello, welcome to Tattoomi! Please sign up to continue.
-      <div className="relative my-10">
-        <button
-
-          onClick={handleGoogleSignUp}
-          className="fancyFont2 text-xl mb-2 max-w-2xs rounded-2xl shadow shadow-stone-500 text-shadow-sm text-shadow-stone-500 py-1 px-5 transition-all duration-150 ease-in hover:scale-105 active:scale-95"
+    <div className="relative dark:shadow shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-2 overflow-x-hidden columns-2 lg:columns-3 xl:columns-5 2xl:columns-7">
+      {posts.map((post) => (
+        <div
+          key={post.id}
+          className="relative flex justify-center items-center dark:shadow-inner shadow shadow-stone-500 rounded-xl mb-4"
         >
-          Google
-        </button>
-      </div>
+          <Link href={`/art/${post.id}`}>
+            <Image
+              width={720}
+              height={720}
+              src={post.imageUrl}
+              alt={post.title || "Artwork"}
+              className="rounded-xl"
+            />
+          </Link>
+        </div>
+      ))}
     </div>
   );
 }
