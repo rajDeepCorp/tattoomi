@@ -20,16 +20,12 @@ type Post = {
   description?: string;
   imageUrl: string;
   username: string;
-
   likes: number;
   likedBy?: Record<string, true>;
-
   saves: number;
   savedBy?: Record<string, true>;
-
   got: number;
   gotBy?: Record<string, true>;
-
   createdAt: number;
   tags: string[];
 };
@@ -111,6 +107,7 @@ export default async function Artwork({
         liked={!!post.likedBy?.[email]}
         saved={!!post.savedBy?.[email]}
         gotted={!!post.gotBy?.[email]}
+        isAuthenticated={!!session}
       />
 
       <div className="relative sm:w-4/12">
@@ -128,6 +125,7 @@ export default async function Artwork({
                     width={720}
                     height={720}
                     src={item.imageUrl}
+                    // src="/1.JPG"
                     alt={item.title}
                     className="rounded-xl"
                   />
