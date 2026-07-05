@@ -1,3 +1,5 @@
+// app/api/posts/route.ts
+
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 
@@ -42,7 +44,11 @@ export async function POST(req: NextRequest) {
             description: description || "",
             tags: Array.isArray(tags) ? tags : [],
             likes: 0,
-            comments: 0,
+            likedBy: {},
+            saves: 0,
+            savedBy: {},
+            got: 0,
+            gotBy: {},
             createdAt: Date.now(),
         });
 
