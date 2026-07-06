@@ -1,12 +1,6 @@
 import Image from "next/image";
 
-type UserFaceProps = {
-  user: {
-    name?: string | null;
-    image?: string | null;
-    username?: string | null;
-  };
-};
+type UserFaceProps = { user: { name?: string | null; image?: string | null; }; };
 
 export const UserFace = ({ user }: UserFaceProps) => {
 
