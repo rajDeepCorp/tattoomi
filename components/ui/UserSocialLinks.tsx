@@ -19,11 +19,11 @@ export const UserSocialLinks = ({ user }: UserSocialLinksProps) => {
     ].filter(({ href }) => href);
 
     return (
-        <div className="relative sm:w-1/5 shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-2">
-            <p className="relative text-center shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-2 italic font-bold">
+        <div className="relative sm:w-1/5 w-full shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-1">
+            <p className="relative text-center shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-1 italic font-bold">
                 Links
             </p>
-            <div className="relative max-w-full dark:shadow shadow-inner shadow-stone-500 rounded-4xl p-2 my-1 flex flex-wrap not-sm:justify-between justify-start items-center gap-4">
+            <div className="relative max-w-full dark:shadow shadow-inner shadow-stone-500 rounded-4xl p-2 mx-1 my-1 flex flex-wrap not-sm:justify-between justify-start items-center gap-4">
                 {socialLinks.length > 0 ? (
                     socialLinks.map(({ key, href, icon }) => (
                         <Link
@@ -36,9 +36,7 @@ export const UserSocialLinks = ({ user }: UserSocialLinksProps) => {
                         </Link>
                     ))
                 ) : (
-                    <p className="relative w-full text-center italic text-stone-500 py-3">
-                        No links yet
-                    </p>
+                    <p className="relative w-full text-center italic text-stone-500 py-0">No links</p>
                 )}
             </div>
         </div>

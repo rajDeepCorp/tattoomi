@@ -42,8 +42,6 @@ export default async function Profile() {
       );
   }
 
-  const buttonClasses = "relative shadow dark:shadow-inner shadow-stone-500 py-1 px-2 hover:scale-105 transition-all ease-in duration-150";
-
   return (
     <div className='relative shadow-inner shadow-stone-500 p-2 m-1 rounded-4xl overflow-x-hidden'>
       <div className='relative flex not-sm:flex-col justify-center items-start not-sm:items-center gap-1'>
@@ -64,9 +62,8 @@ export default async function Profile() {
       </div>
 
       <div className='relative shadow dark:shadow-inner shadow-stone-500 rounded-2xl m-1 p-1 flex justify-center items-center'>
-        <div className='relative max-w-fit flex justify-center items-center gap-4 dark:shadow shadow-inner shadow-stone-500 rounded-4xl p-2 my-1'>
-          <button className={`${buttonClasses} rounded-4xl`}>Artworks</button>
-          <button className={`${buttonClasses} rounded-4xl`}>Interests</button>
+        <div className='relative max-w-fit flex justify-center items-center gap-4 dark:shadow shadow-inner shadow-stone-500 rounded-4xl px-2'>
+          Artwork
         </div>
       </div>
 
