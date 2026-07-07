@@ -1,7 +1,9 @@
-import { CiCircleCheck } from "react-icons/ci";
+// components/ui/UserDetails.tsx
+
+import { PiCakeThin } from "react-icons/pi";
 import { VscVerified } from "react-icons/vsc";
 
-type UserDetailsProps = { user: { username?: string | null; address?: string | null; bio?: string | null; emailVerified?: boolean; }; };
+type UserDetailsProps = { user: { username?: string | null; dob?: string | null; address?: string | null; bio?: string | null; emailVerified?: boolean; }; };
 
 const buttonClasses = "relative shadow dark:shadow-inner shadow-stone-500 py-1 px-2 hover:scale-105 transition-all ease-in duration-150";
 
@@ -18,12 +20,21 @@ export const UserDetails = ({ user }: UserDetailsProps) => {
                 )}
             </h1>
 
-            <address className='relative text-xs opacity-60 max-w-fit dark:shadow shadow-inner shadow-stone-500 rounded-2xl py-0.5 px-2 text-shadow-lg my-1'>
-                244, Subhash Nagar, Bareilly - 243001
+            <address className='relative text-xs opacity-60 italic max-w-fit dark:shadow shadow-inner shadow-stone-500 rounded-2xl py-0.5 px-2 text-shadow-lg my-1'>
+                {user.address || "No Address"}
             </address>
 
+            <p className='relative text-xs opacity-80 max-w-fit dark:shadow shadow-inner shadow-stone-500 rounded-2xl py-0.5 px-2 text-shadow-lg my-1 flex justify-start items-center gap-1'>
+                <PiCakeThin /> {user.dob
+                    ? new Date(user.dob).toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "short",
+                    })
+                    : null}
+            </p>
+
             <p className='relative text-sm opacity-80 max-w-fit dark:shadow shadow-inner shadow-stone-500 rounded-xl py-0.5 px-2 text-shadow-lg my-1'>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia laudantium obcaecati, quod qui aliquam totam.
+                {user.bio || "No Bio"}
             </p>
 
             <div className='relative flex max-w-fit justify-start items-center dark:shadow shadow-inner shadow-stone-500 rounded-4xl p-2 my-2 gap-2'>

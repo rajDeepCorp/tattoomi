@@ -1,8 +1,6 @@
 // tattoomi/components/forms/SigninForm.tsx
 "use client";
 import { FcGoogle } from "react-icons/fc";
-import { CiFacebook } from "react-icons/ci";
-import { IoLogoInstagram } from "react-icons/io5";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
@@ -32,7 +30,7 @@ const SigninForm = () => {
       const { data, error } = await authClient.signIn.email({
         email,
         password,
-        callbackURL: "/dashboard",
+        callbackURL: "/profile",
         rememberMe: true,
       });
 
@@ -61,7 +59,7 @@ const SigninForm = () => {
 
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/dashboard",
+        callbackURL: "/profile",
       });
 
       toast.dismiss(loadingToast);
@@ -148,6 +146,8 @@ const SigninForm = () => {
           {loading ? "Signing In..." : "Signin"}
         </button>
       </form>
+
+      <p>Forgot Password? <Link href="/resetpassword" className="underline italic">Click here</Link></p>
 
       <p>or continue with</p>
       {buttonMeta.map(({ Icon, Action, text }, index) => (

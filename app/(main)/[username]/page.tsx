@@ -11,8 +11,6 @@ import { db } from "@/lib/auth";
 import { VscVerified } from "react-icons/vsc";
 import { adminDb } from "@/firebaseAdmin";
 
-const images = [1, 2, 3, 4, 5];
-
 export default async function ArtistProfile({
   params,
 }: {
@@ -126,11 +124,9 @@ export default async function ArtistProfile({
         </div>
 
         {/* social links wali div */}
-        <div className="relative sm:w-1/5 shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-2">
-          <p className="relative text-center shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-2 italic font-bold">
-            Links
-          </p>
-          <div className="relative max-w-full dark:shadow shadow-inner shadow-stone-500 rounded-4xl p-2 my-1 flex flex-wrap not-sm:justify-between justify-start items-center gap-4">
+        <div className="relative sm:w-1/5 w-full shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-1">
+          <p className="relative text-center shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-1 italic font-bold">Links</p>
+          <div className="relative max-w-full dark:shadow shadow-inner shadow-stone-500 rounded-4xl p-2 mx-1 my-1 flex flex-wrap not-sm:justify-between justify-start items-center gap-4">
             {socialLinks.length > 0 ? (
               socialLinks.map(({ key, href, icon }) => (
                 <Link
@@ -143,9 +139,7 @@ export default async function ArtistProfile({
                 </Link>
               ))
             ) : (
-              <p className="relative w-full text-center italic text-stone-500 py-3">
-                No links yet
-              </p>
+              <p className="relative w-full text-center italic text-stone-500 py-0">No links</p>
             )}
           </div>
         </div>
@@ -170,10 +164,7 @@ export default async function ArtistProfile({
       </div>
 
       <div className='relative shadow dark:shadow-inner shadow-stone-500 rounded-2xl m-1 p-1 flex justify-center items-center'>
-        <div className='relative max-w-fit flex justify-center items-center gap-4 dark:shadow shadow-inner shadow-stone-500 rounded-4xl p-2 my-1'>
-          <button className={`${buttonClasses} rounded-4xl`}>Artworks</button>
-          <button className={`${buttonClasses} rounded-4xl`}>Interests</button>
-        </div>
+        <div className='relative max-w-fit flex justify-center items-center gap-4 dark:shadow shadow-inner shadow-stone-500 rounded-4xl px-2'>Artwork</div>
       </div>
 
       <div className="relative dark:shadow shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-2 overflow-x-hidden columns-2 lg:columns-3 xl:columns-5 2xl:columns-7">

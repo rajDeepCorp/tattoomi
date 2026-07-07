@@ -1,4 +1,5 @@
-// tattoomi/components/forms/SigninForm.tsx
+// components/forms/SignupForm.tsx
+
 "use client";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -160,11 +161,7 @@ const SignupForm = () => {
     }
   };
 
-  const buttonMeta = [
-    { Icon: FcGoogle, Action: handleGoogleSignUp, text: "Google" },
-    // { Icon: CiFacebook, Action: handleFacebookSignUp, text: "Facebook" },
-    // { Icon: IoLogoInstagram, Action: handleGoogleSignUp, text: "Instagram" },
-  ]
+  const buttonMeta = [{ Icon: FcGoogle, Action: handleGoogleSignUp, text: "Google" },]
 
   const buttonStylesClasses = "relative max-w-xs min-w-54 tracking-widest shadow-stone-500 py-2 rounded-2xl flex justify-center items-center gap-1.5 transition-all duration-200 ease-in shadow hover:scale-105 active:scale-95 active:shadow-inner";
 

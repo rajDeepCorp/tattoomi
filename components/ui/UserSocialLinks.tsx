@@ -20,10 +20,8 @@ export const UserSocialLinks = ({ user }: UserSocialLinksProps) => {
 
     return (
         <div className="relative sm:w-1/5 w-full shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-1">
-            <p className="relative text-center shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-1 italic font-bold">
-                Links
-            </p>
-            <div className="relative max-w-full dark:shadow shadow-inner shadow-stone-500 rounded-4xl p-2 mx-1 my-1 flex flex-wrap not-sm:justify-between justify-start items-center gap-4">
+            <p className="relative text-center shadow dark:shadow-inner shadow-stone-500 rounded-2xl mx-1 my-2 p-1 italic font-bold">Links</p>
+            <div className="relative max-w-full dark:shadow shadow-inner shadow-stone-500 rounded-4xl p-2 mx-1 my-1 flex flex-wrap not-sm:justify-around justify-start items-center gap-4">
                 {socialLinks.length > 0 ? (
                     socialLinks.map(({ key, href, icon }) => (
                         <Link

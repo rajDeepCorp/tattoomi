@@ -3,6 +3,7 @@
 import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { resend } from "@/lib/resend";
 
 const client = new MongoClient(
     process.env.MONGODB_URI as string
@@ -15,6 +16,60 @@ export const auth = betterAuth({
     }),
     emailAndPassword: {
         enabled: true,
+
+        async sendResetPassword({ user, url }) {
+            console.log("🔥 sendResetPassword called");
+            console.log(user.email);
+            console.log(url);
+            const result = await resend.emails.send({
+                from: process.env.EMAIL_FROM as string,
+                to: user.email,
+                subject: "Reset your TATTOOMI password",
+                html: `
+                    <div style="font-family:Arial,sans-serif;padding:24px;">
+                        <h2>TATTOOMI</h2>
+
+                        <p>Hello ${user.name ?? "Artist"},</p>
+
+                        <p>
+                            We received a request to reset your password.
+                        </p>
+
+                        <p>
+                            Click the button below to create a new password.
+                        </p>
+
+                        <p style="margin:30px 0;">
+                            <a
+                                href="${url}"
+                                style="
+                                    background:#111827;
+                                    color:#fff;
+                                    padding:12px 24px;
+                                    text-decoration:none;
+                                    border-radius:8px;
+                                "
+                            >
+                                Reset Password
+                            </a>
+                        </p>
+
+                        <p>
+                            If you didn't request this, you can safely ignore
+                            this email.
+                        </p>
+                    </div>
+                `,
+            });
+            console.log(result);
+        },
+
+        async onPasswordReset({ user }) {
+            console.log(
+                `Password reset successful for ${user.email}`
+            );
+        },
+
     },
     socialProviders: {
         google: {
@@ -46,6 +101,34 @@ export const auth = betterAuth({
                 required: false,
             },
             bio: {
+                type: "string",
+                required: false,
+            },
+            facebook: {
+                type: "string",
+                required: false,
+            },
+            instagram: {
+                type: "string",
+                required: false,
+            },
+            youtube: {
+                type: "string",
+                required: false,
+            },
+            twitter: {
+                type: "string",
+                required: false,
+            },
+            linkedin: {
+                type: "string",
+                required: false,
+            },
+            github: {
+                type: "string",
+                required: false,
+            },
+            website: {
                 type: "string",
                 required: false,
             },

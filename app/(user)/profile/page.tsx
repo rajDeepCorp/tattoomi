@@ -62,9 +62,7 @@ export default async function Profile() {
       </div>
 
       <div className='relative shadow dark:shadow-inner shadow-stone-500 rounded-2xl m-1 p-1 flex justify-center items-center'>
-        <div className='relative max-w-fit flex justify-center items-center gap-4 dark:shadow shadow-inner shadow-stone-500 rounded-4xl px-2'>
-          Artwork
-        </div>
+        <div className='relative max-w-fit flex justify-center items-center gap-4 dark:shadow shadow-inner shadow-stone-500 rounded-4xl px-2'>Artwork</div>
       </div>
 
       <UserPosts posts={posts} />

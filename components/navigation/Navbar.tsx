@@ -27,6 +27,8 @@ const Navbar = ({ user }: NavbarProps) => {
   const [scrollingDown, setScrollingDown] = useState(false);
 
   const isLoggedIn = Boolean(user?.username?.trim() && user?.emailVerified);
+  const isGeneral = (user?.username?.trim());
+
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -58,10 +60,15 @@ const Navbar = ({ user }: NavbarProps) => {
       { Icon: CiSearch, label: "Search", title: "Search", key: "Search", href: "/search", },
     ];
 
+    if (isGeneral) {
+      links.push(
+        { Icon: CiSettings, label: "Settings", title: "Settings", key: "Settings", href: "/settings", },
+      );
+    }
+
     if (isLoggedIn) {
       links.push(
         { Icon: CiCamera, label: "Post Work", title: "Post Work", key: "Post", href: "/post", },
-        { Icon: CiSettings, label: "Settings", title: "Settings", key: "Settings", href: "/settings", }
       );
     }
 

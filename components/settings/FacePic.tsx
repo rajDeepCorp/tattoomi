@@ -4,6 +4,7 @@
 import Image from "next/image";
 import React, { useRef } from "react";
 import { upload } from "@vercel/blob/client";
+import { toast } from "sonner";
 
 type FacePicProps = {
   user: {
@@ -30,16 +31,15 @@ const FacePic = ({ user }: FacePicProps) => {
     try {
       const extension = file.name.split(".").pop();
 
-      const fileName = `${
-        user.username || user.name || "user"
-      }-facepic.${extension}`;
+      const fileName = `${user.username || user.name || "user"
+        }-facepic.${extension}`;
 
       const uploaded = await upload(fileName, file, {
         access: "public",
         handleUploadUrl: "/api/imagefiles/upload",
       });
 
-      await fetch("/api/auth/update-image", {
+      const response = await fetch("/api/auth/update-image", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +49,12 @@ const FacePic = ({ user }: FacePicProps) => {
         }),
       });
 
-      window.location.reload();
+      if (response.ok) {
+        toast.success("Profile image updated");
+        window.location.reload();
+      } else {
+        console.error("Failed to update profile image.");
+      }
     } catch (error) {
       console.error(error);
     }
