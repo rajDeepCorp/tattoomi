@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { IconType } from "react-icons";
 import { CiCamera, CiSearch, CiSettings, CiShop, CiUser, } from "react-icons/ci";
 
-type User = { username?: string | null; emailVerified?: boolean; };
+type User = { email?: string | null; username?: string | null; emailVerified?: boolean; };
 
 type NavbarProps = { user: User | null; };
 
@@ -28,6 +28,7 @@ const Navbar = ({ user }: NavbarProps) => {
 
   const isLoggedIn = Boolean(user?.username?.trim() && user?.emailVerified);
   const isGeneral = (user?.username?.trim());
+  const isGuest = Boolean(user?.username?.trim() || user?.emailVerified || user?.email);
 
 
   useEffect(() => {
@@ -74,10 +75,10 @@ const Navbar = ({ user }: NavbarProps) => {
 
     links.push({
       Icon: CiUser,
-      label: isLoggedIn ? "Profile" : "Signin",
-      title: isLoggedIn ? "Profile" : "Signin",
-      key: isLoggedIn ? "Profile" : "Signin",
-      href: isLoggedIn ? "/profile" : "/signin",
+      label: isGuest ? "Profile" : "Signin",
+      title: isGuest ? "Profile" : "Signin",
+      key: isGuest ? "Profile" : "Signin",
+      href: isGuest ? "/profile" : "/signin",
     });
 
     return links;
