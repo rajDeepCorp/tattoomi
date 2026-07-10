@@ -30,18 +30,20 @@ export const UserDetails = ({ user }: UserDetailsProps) => {
                         day: "numeric",
                         month: "short",
                     })
-                    : null}
+                    : "No DOB"}
             </p>
 
             <p className='relative text-sm opacity-80 max-w-fit dark:shadow shadow-inner shadow-stone-500 rounded-xl py-0.5 px-2 text-shadow-lg my-1'>
                 {user.bio || "No Bio"}
             </p>
 
-            <div className='relative flex max-w-fit justify-start items-center dark:shadow shadow-inner shadow-stone-500 rounded-4xl p-2 my-2 gap-2'>
-                <button className={`${buttonClasses} rounded-4xl`}>Clients</button>
-                <button className={`${buttonClasses} rounded-4xl`}>Artists</button>
-                <button className={`${buttonClasses} rounded-4xl`}>Calls</button>
-            </div>
+            {user.username &&
+                (<div className='relative flex max-w-fit justify-start items-center dark:shadow shadow-inner shadow-stone-500 rounded-4xl p-2 my-2 gap-2'>
+                    <button className={`${buttonClasses} rounded-4xl`}>Clients</button>
+                    <button className={`${buttonClasses} rounded-4xl`}>Artists</button>
+                    <button className={`${buttonClasses} rounded-4xl`}>Calls</button>
+                </div>)
+            }
         </div>
-    )
-}
+    );
+};

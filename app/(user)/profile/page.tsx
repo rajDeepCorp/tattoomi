@@ -8,6 +8,7 @@ import { UserSocialLinks } from '@/components/ui/UserSocialLinks';
 import { ExploreArtist } from '@/components/ui/ExploreArtist';
 import { adminDb } from "@/firebaseAdmin";
 import UserPosts from '@/components/ui/UserPosts';
+import SignoutButton from '@/components/ui/SignoutButton';
 
 
 
@@ -55,18 +56,25 @@ export default async function Profile() {
         {/* social links wali div */}
         <UserSocialLinks user={session.user} />
 
-
         {/* recommandations wali div */}
         <ExploreArtist />
 
       </div>
 
       <div className='relative shadow dark:shadow-inner shadow-stone-500 rounded-2xl m-1 p-1 flex justify-center items-center'>
-        <div className='relative max-w-fit flex justify-center items-center gap-4 dark:shadow shadow-inner shadow-stone-500 rounded-4xl px-2'>Artwork</div>
+        {session.user.username ?
+          (
+            <div className='relative max-w-fit flex justify-center items-center gap-4 dark:shadow shadow-inner shadow-stone-500 rounded-4xl px-2 py-1'>
+              Artwork
+            </div>
+          ) :
+          (
+            <div className='relative max-w-fit flex justify-center items-center gap-4 dark:shadow shadow-inner shadow-stone-500 rounded-4xl px-2 py-1'>
+              <SignoutButton />
+            </div>
+          )}
       </div>
-
-      <UserPosts posts={posts} />
-
+      {session.user.username && <UserPosts posts={posts} />}
     </div>
   )
 }
